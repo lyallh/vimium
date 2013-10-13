@@ -14,6 +14,7 @@
 # query terms.
 class Suggestion
   showRelevancy: false # Set this to true to render relevancy when debugging the ranking scores.
+  compact: true # Use compact html option
 
   # - type: one of [bookmark, history, tab].
   # - computeRelevancyFunction: a function which takes a Suggestion and returns a relevancy score
@@ -29,18 +30,33 @@ class Suggestion
     favIconUrl = @tabFavIconUrl or "#{@getUrlRoot(@url)}/favicon.ico"
     relevancyHtml = if @showRelevancy then "<span class='relevancy'>#{@computeRelevancy()}</span>" else ""
     # NOTE(philc): We're using these vimium-specific class names so we don't collide with the page's CSS.
-    @html =
-      """
-      <div class="vimiumReset vomnibarTopHalf">
-         <span class="vimiumReset vomnibarSource">#{@type}</span>
-         <span class="vimiumReset vomnibarTitle">#{@highlightTerms(Utils.escapeHtml(@title))}</span>
-       </div>
-       <div class="vimiumReset vomnibarBottomHalf vomnibarIcon"
-            style="background-image: url(#{favIconUrl});">
-        <span class="vimiumReset vomnibarUrl">#{@shortenUrl(@highlightTerms(@url))}</span>
-        #{relevancyHtml}
-      </div>
-      """
+    if not @compact
+      @html =
+        """
+        <div class="vimiumReset vomnibarTopHalf">
+          <span class="vimiumReset vomnibarSource">#{@type}</span>
+          <span class="vimiumReset vomnibarTitle">#{@highlightTerms(Utils.escapeHtml(@title))}</span>
+        </div>
+        <div class="vimiumReset vomnibarBottomHalf vomnibarIcon"
+             style="background-image: url(#{favIconUrl});">
+         <span class="vimiumReset vomnibarUrl">#{@shortenUrl(@highlightTerms(@url))}</span>
+          #{relevancyHtml}
+        </div>
+        """
+    else
+      @html =
+        """
+         <div class="vimiumReset vomnibarCompact">
+           <div class="vomnibarSource">#{@type}</div>
+           <div class="vomnibarCompactEntry vomnibarIcon"
+                style="background-image: url(#{favIconUrl});">
+             <div class="vomnibarTitle">#{@highlightTerms(Utils.escapeHtml(@title))}</div>
+             <div class="vomnibarUrl">#{@shortenUrl(@highlightTerms(@getUrlRoot(@url)))}</div>
+           </div>
+           #{relevancyHtml}
+         </div>
+         """
+
 
   # use neat trick to snatch a domain (http://stackoverflow.com/a/8498668)
   getUrlRoot: (url) ->

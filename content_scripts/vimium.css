@@ -349,6 +349,16 @@ body.vimiumFindMode ::selection {
   padding: 2px 0;
 }
 
+#vomnibar li .vomnibarCompact {
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+}
+
+#vomnibar li .vomnibarCompactEntry {
+  display: -webkit-flex;
+  -webkit-flex: 1 1 auto;
+}
+
 #vomnibar li .vomnibarIcon {
   background-position-y: center;
   background-size: 16px;
@@ -359,7 +369,9 @@ body.vimiumFindMode ::selection {
 #vomnibar li .vomnibarSource {
   color: #777;
   margin-right: 4px;
+  -webkit-flex: 0 0 70px;
 }
+
 #vomnibar li .vomnibarRelevancy {
   position: absolute;
   right: 0;
@@ -375,6 +387,18 @@ body.vimiumFindMode ::selection {
 #vomnibar li .vomnibarUrl {
   white-space: nowrap;
   color: #224684;
+}
+
+#vomnibar li .vomnibarCompact .vomnibarUrl {
+  overflow: hidden;
+  margin-left: 6px;
+}
+
+#vomnibar li .vomnibarCompact .vomnibarTitle {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 #vomnibar li .vomnibarMatch {
@@ -397,8 +421,6 @@ body.vimiumFindMode ::selection {
   background-color: #BBCEE9;
   font-weight: normal;
 }
-
-
 
 div#vimiumFlash {
   box-shadow: 0px 0px 4px 2px #4183C4;
