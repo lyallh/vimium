@@ -367,7 +367,7 @@ body.vimiumFindMode ::selection {
 }
 
 #vomnibar li .vomnibarSource {
-  color: #777;
+  color: rgb(48, 57, 66);
   margin-right: 4px;
   -webkit-flex: 0 0 70px;
 }
@@ -390,6 +390,7 @@ body.vimiumFindMode ::selection {
 }
 
 #vomnibar li .vomnibarCompact .vomnibarUrl {
+  color: rgb(151, 156, 160);
   overflow: hidden;
   margin-left: 6px;
 }
