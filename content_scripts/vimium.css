@@ -352,6 +352,8 @@ body.vimiumFindMode ::selection {
 #vomnibar li .vomnibarCompact {
   display: -webkit-flex;
   -webkit-flex-direction: row;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 90%;
 }
 
 #vomnibar li .vomnibarCompactEntry {
@@ -367,8 +369,14 @@ body.vimiumFindMode ::selection {
 }
 
 #vomnibar li .vomnibarSource {
-  color: rgb(48, 57, 66);
+  color: #777;
   margin-right: 4px;
+}
+
+#vomnibar li .vomnibarCompact .vomnibarSource {
+  color: rgb(151, 156, 160);
+  text-align: right;
+  margin-right: 25px;
   -webkit-flex: 0 0 70px;
 }
 
@@ -393,6 +401,7 @@ body.vimiumFindMode ::selection {
   color: rgb(151, 156, 160);
   overflow: hidden;
   margin-left: 6px;
+  min-width: -webkit-min-content;
 }
 
 #vomnibar li .vomnibarCompact .vomnibarTitle {

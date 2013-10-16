@@ -27,6 +27,7 @@ class Suggestion
 
   generateHtml: ->
     return @html if @html
+    @type = @lastVisited or @type
     favIconUrl = @tabFavIconUrl or "#{@getUrlRoot(@url)}/favicon.ico"
     relevancyHtml = if @showRelevancy then "<span class='relevancy'>#{@computeRelevancy()}</span>" else ""
     # NOTE(philc): We're using these vimium-specific class names so we don't collide with the page's CSS.
@@ -62,7 +63,7 @@ class Suggestion
   getUrlRoot: (url) ->
     a = document.createElement 'a'
     a.href = url
-    a.protocol + "//" + a.hostname
+    if @type == 'domain' then url else a.protocol + "//" + a.hostname
 
   shortenUrl: (url) -> @stripTrailingSlash(url).replace(/^http:\/\//, "")
 
@@ -178,8 +179,42 @@ class HistoryCompleter
         else
           []
       suggestions = results.map (entry) =>
-        new Suggestion(queryTerms, "history", entry.url, entry.title, @computeRelevancy, entry)
+        suggestion = new Suggestion(queryTerms, "history", entry.url, entry.title, @computeRelevancy, entry)
+        lastVisited = new Date(entry.lastVisitTime);
+        if @isToday(lastVisited)
+          suggestion.lastVisited = @format12HourTime(lastVisited)
+        else if @isWithinWeek(lastVisited)
+          dayOfWeek = lastVisited.toDateString().split(" ")[0]
+          suggestion.lastVisited = dayOfWeek
+        else
+          monthNameAndDay = lastVisited.toDateString().split(" ").slice(1,3).join(" ")
+          suggestion.lastVisited = monthNameAndDay
+        suggestion
       onComplete(suggestions)
+
+  format12HourTime: (date) ->
+    hours = date.getHours()
+    minutes = date.getMinutes()
+    ampm = if hours >= 12 then 'pm' else 'am'
+    hours = hours % 12
+    hours = if hours then hours else 12 # the hour '0' should be '12'
+    minutes = if minutes < 10 then '0' + minutes else minutes
+    strTime = hours + ':' + minutes + ' ' + ampm
+    strTime
+
+  isToday: (date) ->
+    today = new Date()
+    today.getYear() == date.getYear() &&
+    today.getMonth() == date.getMonth() &&
+    today.getDate() == date.getDate()
+
+  isWithinWeek: (date) ->
+    millisecondsInWeek = 86400 * 1000 * 7
+    Date.now() - date.getTime() < millisecondsInWeek
+
+  getDayName: (date) ->
+    days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    days[date.getDay()]
 
   computeRelevancy: (suggestion) ->
     historyEntry = suggestion.extraRelevancyData
