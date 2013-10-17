@@ -24,6 +24,7 @@ root.Settings = Settings =
     scrollStepSize: 60
     linkHintCharacters: "sadfjklewcmpgh"
     linkHintNumbers: "0123456789"
+    compactVomnibar: false
     filterLinkHints: false
     hideHud: false
     userDefinedLinkHintCss:

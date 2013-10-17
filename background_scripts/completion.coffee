@@ -14,7 +14,6 @@
 # query terms.
 class Suggestion
   showRelevancy: false # Set this to true to render relevancy when debugging the ranking scores.
-  compact: true # Use compact html option
 
   # - type: one of [bookmark, history, tab].
   # - computeRelevancyFunction: a function which takes a Suggestion and returns a relevancy score
@@ -28,10 +27,11 @@ class Suggestion
   generateHtml: ->
     return @html if @html
     @type = @lastVisited or @type
+    compact = Settings.get("compactVomnibar")
     favIconUrl = @tabFavIconUrl or "#{@getUrlRoot(@url)}/favicon.ico"
     relevancyHtml = if @showRelevancy then "<span class='relevancy'>#{@computeRelevancy()}</span>" else ""
     # NOTE(philc): We're using these vimium-specific class names so we don't collide with the page's CSS.
-    if not @compact
+    if not compact
       @html =
         """
         <li>
