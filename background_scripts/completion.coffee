@@ -185,7 +185,7 @@ class HistoryCompleter
           []
       suggestions = results.map (entry) =>
         suggestion = new Suggestion(queryTerms, "history", entry.url, entry.title, @computeRelevancy, entry)
-        lastVisited = new Date(entry.lastVisitTime);
+        lastVisited = new Date(entry.lastVisitTime)
         if @isToday(lastVisited)
           suggestion.lastVisited = @format12HourTime(lastVisited)
         else if @isWithinWeek(lastVisited)
@@ -216,10 +216,6 @@ class HistoryCompleter
   isWithinWeek: (date) ->
     millisecondsInWeek = 86400 * 1000 * 7
     Date.now() - date.getTime() < millisecondsInWeek
-
-  getDayName: (date) ->
-    days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-    days[date.getDay()]
 
   computeRelevancy: (suggestion) ->
     historyEntry = suggestion.extraRelevancyData
