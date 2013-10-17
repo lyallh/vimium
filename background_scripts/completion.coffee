@@ -34,6 +34,7 @@ class Suggestion
     if not @compact
       @html =
         """
+        <li>
         <div class="vimiumReset vomnibarTopHalf">
           <span class="vimiumReset vomnibarSource">#{@type}</span>
           <span class="vimiumReset vomnibarTitle">#{@highlightTerms(Utils.escapeHtml(@title))}</span>
@@ -43,10 +44,12 @@ class Suggestion
          <span class="vimiumReset vomnibarUrl">#{@shortenUrl(@highlightTerms(@url))}</span>
           #{relevancyHtml}
         </div>
+        </li>
         """
     else
       @html =
         """
+        <li class="vomnibarBorderless">
          <div class="vimiumReset vomnibarCompact">
            <div class="vomnibarSource">#{@type}</div>
            <div class="vomnibarCompactEntry vomnibarIcon"
@@ -56,6 +59,7 @@ class Suggestion
            </div>
            #{relevancyHtml}
          </div>
+         </li>
          """
 
 

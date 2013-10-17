@@ -334,6 +334,10 @@ body.vimiumFindMode ::selection {
   position: relative;
 }
 
+#vomnibar li.vomnibarBorderless {
+  border: 0px;
+}
+
 #vomnibar li:last-of-type {
   border-bottom: none;
 }
