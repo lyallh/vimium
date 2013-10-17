@@ -314,7 +314,7 @@ class TabCompleter
 # A completer which calls filter() on many completers, aggregates the results, ranks them, and returns the top
 # 10. Queries from the vomnibar frontend script come through a multi completer.
 class MultiCompleter
-  constructor: (@completers) -> @maxResults = 10
+  constructor: (@completers) -> @maxResults = if Settings.get("compactVomnibar") then 20 else 10
 
   refresh: -> completer.refresh() for completer in @completers when completer.refresh
 
