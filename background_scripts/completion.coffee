@@ -26,8 +26,9 @@ class Suggestion
 
   generateHtml: ->
     return @html if @html
-    @type = @lastVisited or @type
     compact = Settings.get("compactVomnibar")
+    if compact
+      @type = @lastVisited or @type
     favIconUrl = @tabFavIconUrl or "#{@getUrlRoot(@url)}/favicon.ico"
     relevancyHtml = if @showRelevancy then "<span class='relevancy'>#{@computeRelevancy()}</span>" else ""
     # NOTE(philc): We're using these vimium-specific class names so we don't collide with the page's CSS.
