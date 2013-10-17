@@ -403,7 +403,7 @@ body.vimiumFindMode ::selection {
 }
 
 #vomnibar li .vomnibarCompact .vomnibarUrl {
-  color: rgb(151, 156, 160);
+  color: #3366BB;
   overflow: hidden;
   margin-left: 6px;
   min-width: -webkit-min-content;
