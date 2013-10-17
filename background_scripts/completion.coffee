@@ -317,7 +317,9 @@ class TabCompleter
 class MultiCompleter
   constructor: (@completers) -> @maxResults = if Settings.get("compactVomnibar") then 20 else 10
 
-  refresh: -> completer.refresh() for completer in @completers when completer.refresh
+  refresh: ->
+    completer.refresh() for completer in @completers when completer.refresh
+    @maxResults = if Settings.get("compactVomnibar") then 20 else 10
 
   filter: (queryTerms, onComplete) ->
     # Allow only one query to run at a time.
